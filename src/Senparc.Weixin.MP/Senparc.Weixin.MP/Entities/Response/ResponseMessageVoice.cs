@@ -14,8 +14,11 @@
 namespace Senparc.Weixin.MP.Entities
 {
     /// <summary>
-    /// 需要预先上传多媒体文件到微信服务器，只支持认证服务号。
+    /// 回复语音消息
     /// </summary>
+    /// <remarks>
+    /// 需要预先上传多媒体文件到微信服务器，只支持认证服务号。
+    /// </remarks>
     public class ResponseMessageVoice : ResponseMessageBase, IResponseMessageBase
     {
         new public virtual ResponseMsgType MsgType
@@ -23,6 +26,9 @@ namespace Senparc.Weixin.MP.Entities
             get { return ResponseMsgType.Voice; }
         }
 
+        /// <summary>
+        /// 语音素材
+        /// </summary>
         public Voice Voice { get; set; }
 
         public ResponseMessageVoice()

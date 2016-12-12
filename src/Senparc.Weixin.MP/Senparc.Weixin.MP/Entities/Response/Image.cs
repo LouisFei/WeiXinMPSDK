@@ -13,8 +13,14 @@
 
 namespace Senparc.Weixin.MP.Entities
 {
+    /// <summary>
+    /// 图片素材
+    /// </summary>
     public class Image
     {
+        /// <summary>
+        /// 图片素材编号
+        /// </summary>
         public string MediaId { get; set; }
     }
 }

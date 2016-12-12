@@ -110,7 +110,7 @@ namespace Senparc.Weixin.MessageHandlers
 
         //protected Stream InputStream { get; set; }
         /// <summary>
-        /// 请求实体
+        /// 请求消息，接收到的微信请求消息的对象形式
         /// </summary>
         public virtual TRequest RequestMessage { get; set; }
         /// <summary>
@@ -173,16 +173,16 @@ namespace Senparc.Weixin.MessageHandlers
         }
 
         /// <summary>
-        /// 
+        /// 构造函数
         /// </summary>
-        /// <param name="inputStream"></param>
-        /// <param name="maxRecordCount"></param>
+        /// <param name="inputStream">请求消息流</param>
+        /// <param name="maxRecordCount">单个用户上下文消息列表储存的最大数量</param>
         /// <param name="postData">需要传入到Init的参数</param>
-        public MessageHandler(Stream inputStream, int maxRecordCount = 0, object postData = null)
+        public MessageHandler(Stream requestStream, int maxRecordCount = 0, object postData = null)
         {
-            var postDataDocument = XmlUtility.XmlUtility.Convert(inputStream);
+            var postDataXmlDocument = XmlUtility.XmlUtility.Convert(requestStream);
 
-            CommonInitialize(postDataDocument, maxRecordCount, postData);
+            CommonInitialize(postDataXmlDocument, maxRecordCount, postData);
         }
 
         /// <summary>

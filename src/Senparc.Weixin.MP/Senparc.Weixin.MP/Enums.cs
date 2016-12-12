@@ -223,7 +223,7 @@ namespace Senparc.Weixin.MP
 
 
     /// <summary>
-    /// 发送消息类型
+    /// 回复消息类型
     /// </summary>
     public enum ResponseMsgType
     {
@@ -239,6 +239,7 @@ namespace Senparc.Weixin.MP
         Voice = 4,
         [Description("视频")]
         Video = 5,
+
         [Description("多客服")]
         Transfer_Customer_Service,
         //transfer_customer_service

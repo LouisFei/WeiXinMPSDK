@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-/*----------------------------------------------------------------
+﻿/*----------------------------------------------------------------
     Copyright (C) 2016 Senparc
     
     文件名：ResponseMessageNoResponse.cs
@@ -11,8 +8,7 @@ using System.Linq;
     创建标识：Senparc - 20150505
     
 ----------------------------------------------------------------*/
-using System.Text;
-using System.Threading.Tasks;
+
 using Senparc.Weixin.Entities;
 
 namespace Senparc.Weixin.MP.Entities

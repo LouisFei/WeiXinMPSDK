@@ -14,15 +14,24 @@
 namespace Senparc.Weixin.MP.Entities
 {
     /// <summary>
-    /// 需要预先上传多媒体文件到微信服务器，只支持认证服务号。
+    /// 回复视频消息
     /// </summary>
+    /// <remarks>
+    /// 需要预先上传多媒体文件到微信服务器，只支持认证服务号。
+    /// </remarks>
     public class ResponseMessageVideo : ResponseMessageBase, IResponseMessageBase
     {
+        /// <summary>
+        /// 回复消息类型
+        /// </summary>
         new public virtual ResponseMsgType MsgType
         {
             get { return ResponseMsgType.Video; }
         }
 
+        /// <summary>
+        /// 视频素材
+        /// </summary>
         public Video Video { get; set; }
 
         public ResponseMessageVideo()

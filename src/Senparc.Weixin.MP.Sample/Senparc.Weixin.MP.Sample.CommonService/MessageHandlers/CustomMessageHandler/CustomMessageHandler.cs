@@ -10,15 +10,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Configuration;
 using Senparc.Weixin.MP.Agent;
-using Senparc.Weixin.Context;
 using Senparc.Weixin.MP.Entities;
 using Senparc.Weixin.MP.Entities.Request;
 using Senparc.Weixin.MP.MessageHandlers;
@@ -59,8 +56,14 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
         /// </summary>
         public static Dictionary<string, string> TemplateMessageCollection = new Dictionary<string, string>();
 
-        public CustomMessageHandler(Stream inputStream, PostModel postModel, int maxRecordCount = 0)
-            : base(inputStream, postModel, maxRecordCount)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputStream">请求</param>
+        /// <param name="postModel">请求</param>
+        /// <param name="maxRecordCount"></param>
+        public CustomMessageHandler(Stream requestStream, PostModel postModel, int maxRecordCount = 0)
+            : base(requestStream, postModel, maxRecordCount)
         {
             //这里设置仅用于测试，实际开发可以在外部更全局的地方设置，
             //比如MessageHandler<MessageContext>.GlobalWeixinContext.ExpireMinutes = 3。
@@ -107,7 +110,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
         {
             //TODO:这里的逻辑可以交给Service处理具体信息，参考OnLocationRequest方法或/Service/LocationSercice.cs
 
-            //书中例子
+            #region 书中例子
             //if (requestMessage.Content == "你好")
             //{
             //    var responseMessage = base.CreateResponseMessage<ResponseMessageNews>();
@@ -148,6 +151,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
 
             //方法四（v0.6+），仅适合在HandlerMessage内部使用，本质上是对方法三的封装
             //注意：下面泛型ResponseMessageText即返回给客户端的类型，可以根据自己的需要填写ResponseMessageNews等不同类型。
+            #endregion
 
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
 
@@ -157,14 +161,17 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
             }
             else if (requestMessage.Content == "约束")
             {
+                #region 约束
                 responseMessage.Content =
                     @"您正在进行微信内置浏览器约束判断测试。您可以：
 <a href=""http://sdk.weixin.senparc.com/FilterTest/"">点击这里</a>进行客户端约束测试（地址：http://sdk.weixin.senparc.com/FilterTest/），如果在微信外打开将直接返回文字。
 或：
 <a href=""http://sdk.weixin.senparc.com/FilterTest/Redirect"">点击这里</a>进行客户端约束测试（地址：http://sdk.weixin.senparc.com/FilterTest/Redirect），如果在微信外打开将重定向一次URL。";
+                #endregion
             }
             else if (requestMessage.Content == "托管" || requestMessage.Content == "代理")
             {
+                #region 托管,代理
                 //开始用代理托管，把请求转到其他服务器上去，然后拿回结果
                 //甚至也可以将所有请求在DefaultResponseMessage()中托管到外部。
 
@@ -198,9 +205,11 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     (agentResponseMessage as ResponseMessageNews).Articles[0].Description += msg;
                 }
                 return agentResponseMessage;//可能出现多种类型，直接在这里返回
+                #endregion
             }
             else if (requestMessage.Content == "测试" || requestMessage.Content == "退出")
             {
+                #region 测试,退出
                 /*
                 * 这是一个特殊的过程，此请求通常来自于微微嗨（http://www.weiweihi.com）的“盛派网络小助手”应用请求（http://www.weiweihi.com/User/App/Detail/1），
                 * 用于演示微微嗨应用商店的处理过程，由于微微嗨的应用内部可以单独设置对话过期时间，所以这里通常不需要考虑对话状态，只要做最简单的响应。
@@ -215,10 +224,11 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     //退出APP测试
                     responseMessage.Content = "您已经退出【盛派网络小助手】的测试程序。";
                 }
+                #endregion
             }
             else if (requestMessage.Content == "AsyncTest")
             {
-                //异步并发测试（提供给单元测试使用）
+                #region 异步并发测试（提供给单元测试使用）
                 DateTime begin = DateTime.Now;
                 int t1, t2, t3;
                 System.Threading.ThreadPool.GetAvailableThreads(out t1, out t3);
@@ -233,9 +243,11 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                         end,
                         t2 - t1
                         );
+                #endregion
             }
             else if (requestMessage.Content == "open")
             {
+                #region open
                 var openResponseMessage = requestMessage.CreateResponseMessage<ResponseMessageNews>();
                 openResponseMessage.Articles.Add(new Article()
                 {
@@ -248,30 +260,38 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     Url = "http://sdk.weixin.senparc.com/OpenOAuth/JumpToMpOAuth"
                 });
                 return openResponseMessage;
+                #endregion
             }
             else if (requestMessage.Content == "错误")
             {
+                #region 错误
                 var errorResponseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
                 //因为没有设置errorResponseMessage.Content，所以这小消息将无法正确返回。
                 return errorResponseMessage;
+                #endregion
             }
             else if (requestMessage.Content == "容错")
             {
+                #region 容错
                 Thread.Sleep(1500);//故意延时1.5秒，让微信多次发送消息过来，观察返回结果
                 var faultTolerantResponseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
                 faultTolerantResponseMessage.Content = string.Format("测试容错，MsgId：{0}，Ticks：{1}", requestMessage.MsgId,
                     DateTime.Now.Ticks);
                 return faultTolerantResponseMessage;
+                #endregion
             }
             else if (requestMessage.Content.ToUpper() == "TM")//异步模板消息设置
             {
+                #region TM
                 var openId = requestMessage.FromUserName;
                 var checkCode = Guid.NewGuid().ToString("n").Substring(0, 3);//为了防止openId泄露造成骚扰，这里启用验证码
                 TemplateMessageCollection[checkCode] = openId;
                 responseMessage.Content = string.Format(@"新的验证码为：{0}，请在网页上输入。网址：http://sdk.weixin.senparc.com/AsyncMethods", checkCode);
+                #endregion
             }
             else
             {
+                #region 其它
                 var result = new StringBuilder();
                 result.AppendFormat("您刚才发送了文字信息：{0}\r\n\r\n", requestMessage.Content);
 
@@ -300,6 +320,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
                     "您还可以发送【位置】【图片】【语音】【视频】等类型的信息（注意是这几种类型，不是这几个文字），查看不同格式的回复。\r\nSDK官方地址：http://sdk.weixin.senparc.com");
 
                 responseMessage.Content = result.ToString();
+                #endregion
             }
             return responseMessage;
         }

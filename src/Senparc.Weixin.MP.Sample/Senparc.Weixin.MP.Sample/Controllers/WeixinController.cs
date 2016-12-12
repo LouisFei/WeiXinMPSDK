@@ -21,17 +21,20 @@ namespace Senparc.Weixin.MP.Sample.Controllers
 
     public partial class WeixinController : Controller
     {
-        public static readonly string Token = WebConfigurationManager.AppSettings["WeixinToken"];//与微信公众账号后台的Token设置保持一致，区分大小写。
-        public static readonly string EncodingAESKey = WebConfigurationManager.AppSettings["WeixinEncodingAESKey"];//与微信公众账号后台的EncodingAESKey设置保持一致，区分大小写。
-        public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        //与微信公众账号后台的Token设置保持一致，区分大小写。
+        public static readonly string Token = WebConfigurationManager.AppSettings["WeixinToken"];
+        //与微信公众账号后台的EncodingAESKey设置保持一致，区分大小写。
+        public static readonly string EncodingAESKey = WebConfigurationManager.AppSettings["WeixinEncodingAESKey"];
+        //与微信公众账号后台的AppId设置保持一致，区分大小写。
+        public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
 
         readonly Func<string> _getRandomFileName = () => DateTime.Now.ToString("yyyyMMdd-HHmmss") + Guid.NewGuid().ToString("n").Substring(0, 6);
 
         public WeixinController()
         {
-
         }
 
+        #region 微信后台验证地址（使用Get）
         /// <summary>
         /// 微信后台验证地址（使用Get），微信后台的“接口配置信息”的Url填写如：http://sdk.weixin.senparc.com/weixin
         /// </summary>
@@ -39,6 +42,14 @@ namespace Senparc.Weixin.MP.Sample.Controllers
         [ActionName("Index")]
         public ActionResult Get(PostModel postModel, string echostr)
         {
+            /*
+             	?signature=2ddf1f2d960f0c10866b4b1f852723b1caeaca92
+                &echostr=1109242096751963051
+                &timestamp=1481534379
+                &nonce=595239645
+             */
+
+            //开发者通过检验signature对请求进行校验，若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败。
             if (CheckSignature.Check(postModel.Signature, postModel.Timestamp, postModel.Nonce, Token))
             {
                 return Content(echostr); //返回随机字符串则表示验证通过
@@ -49,7 +60,9 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                     "如果你在浏览器中看到这句话，说明此地址可以被作为微信公众账号后台的Url，请注意保持Token一致。");
             }
         }
+        #endregion
 
+        #region 处理接收到的消息
         /// <summary>
         /// 用户发送消息后，微信平台自动Post一个请求到这里，并等待响应XML。
         /// PS：此方法为简化方法，效果与OldPost一致。
@@ -148,7 +161,7 @@ namespace Senparc.Weixin.MP.Sample.Controllers
                 return Content("");
             }
         }
-
+        #endregion
 
         /// <summary>
         /// 最简化的处理流程（不加密）

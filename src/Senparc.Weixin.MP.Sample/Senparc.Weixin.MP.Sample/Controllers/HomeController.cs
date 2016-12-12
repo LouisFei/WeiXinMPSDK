@@ -9,19 +9,12 @@
 ----------------------------------------------------------------*/
 
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-//using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 using Senparc.Weixin.Cache;
-using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Sample.CommonService.Download;
-using Senparc.Weixin.Open.CommonAPIs;
 
 namespace Senparc.Weixin.MP.Sample.Controllers
 {
@@ -91,6 +84,11 @@ namespace Senparc.Weixin.MP.Sample.Controllers
         {
             Senparc.Weixin.Config.IsDebug = false;
             return Content("Debug状态已关闭。");
+        }
+
+        public ActionResult Test()
+        {
+            return Content("test by louis");
         }
     }
 }

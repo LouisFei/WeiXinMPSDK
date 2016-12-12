@@ -112,7 +112,7 @@ namespace Senparc.Weixin.MP.MessageHandlers
 
 
         /// <summary>
-        /// 请求实体
+        /// 接收到的微信请求消息的对象形式
         /// </summary>
         public new IRequestMessageBase RequestMessage
         {
@@ -171,10 +171,10 @@ namespace Senparc.Weixin.MP.MessageHandlers
         /// </summary>
         /// <param name="inputStream">请求消息流</param>
         /// <param name="postModel">PostModel</param>
-        /// <param name="maxRecordCount">单个用户上下文消息列表储存的最大长度</param>
+        /// <param name="maxRecordCount">单个用户上下文消息列表储存的最大数量</param>
         /// <param name="developerInfo">微微嗨开发者信息，如果不为空，则优先请求云端应用商店的资源</param>
-        public MessageHandler(Stream inputStream, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null)
-            : base(inputStream, maxRecordCount, postModel)
+        public MessageHandler(Stream requestStream, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null)
+            : base(requestStream, maxRecordCount, postModel)
         {
             DeveloperInfo = developerInfo;
         }
@@ -210,26 +210,54 @@ namespace Senparc.Weixin.MP.MessageHandlers
             base.CommonInitialize(postDataDocument, maxRecordCount, postModel);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="postDataDocument"></param>
+        /// <param name="postData"></param>
+        /// <returns></returns>
         public override XDocument Init(XDocument postDataDocument, object postData = null)
         {
-            //进行加密判断并处理
-            _postModel = postData as PostModel;
-            var postDataStr = postDataDocument.ToString();
+            #region 收到的消息
+            /*
+                消息明文：
+                <xml>
+                  <ToUserName><![CDATA[gh_38640ec5f978]]></ToUserName>
+                  <FromUserName><![CDATA[oqEGWt6BkcPhth9UxiVp63i-BHWI]]></FromUserName>
+                  <CreateTime>1481533696</CreateTime>
+                  <MsgType><![CDATA[text]]></MsgType>
+                  <Content><![CDATA[1]]></Content>
+                  <MsgId>6363138772725811838</MsgId>
+                </xml>
 
+                消息密文：
+                <xml>
+                    <ToUserName><![CDATA[gh_38640ec5f978]]></ToUserName>
+                    <Encrypt><![CDATA[QXwaewatXgxDm7pVWdxuaBK3oennqb+IoSInlmonL1j/JedhQa48jpgcHSVPqWoEzWE++6965P/wTecjkET4q6/rqolnKLkJMIjA7N7fAni3oaUc4Jc/+uHUoOqpeUvBQ8WLqt8Pkby/d85Ua9JuHP2rUYl+MvHdPHM3I3iLDs4wJpjJaQwbojD3ke3ZVU66iVjF6z/nrEfc4xeYZ6HKQndkv6upQMnVNjbIpaBwkOuyOa5p0vM5TMLfcz+zkd3WqSMztGef7U/e7d2sklccqDtaY218bWSdgSl5gmx1Rrpq7brEmkNtiMl0oxj1j5brqUln2nZvxsAtBhlhtB1zKr9kjqng/5c4ZiB9hw0HfiNOXqwtsVa08/cSHvgvc1P5EFK+Ta4zrvReVI4rY/MnbvTrzs+ILGlqwEA1yeuVb8w=]]></Encrypt>
+                </xml>
+             */
+            #endregion
+            
+            _postModel = postData as PostModel;
+
+            //消息明文
             XDocument decryptDoc = postDataDocument;
 
+            //进行加密判断并处理
             if (_postModel != null && postDataDocument.Root.Element("Encrypt") != null && !string.IsNullOrEmpty(postDataDocument.Root.Element("Encrypt").Value))
             {
+                #region 如果消息被加密，进行解密操作
+
                 //使用了加密
                 UsingEcryptMessage = true;
                 EcryptRequestDocument = postDataDocument;
 
+                //解密（解密算法来之微信官方提供的代码）
                 WXBizMsgCrypt msgCrype = new WXBizMsgCrypt(_postModel.Token, _postModel.EncodingAESKey, _postModel.AppId);
                 string msgXml = null;
-                var result = msgCrype.DecryptMsg(_postModel.Msg_Signature, _postModel.Timestamp, _postModel.Nonce, postDataStr, ref msgXml);
+                var result = msgCrype.DecryptMsg(_postModel.Msg_Signature, _postModel.Timestamp, _postModel.Nonce, postDataDocument.ToString(), ref msgXml);
 
-                //判断result类型
+                //判断解密结果
                 if (result != 0)
                 {
                     //验证没有通过，取消执行
@@ -244,6 +272,7 @@ namespace Senparc.Weixin.MP.MessageHandlers
                 }
 
                 decryptDoc = XDocument.Parse(msgXml);//完成解密
+                #endregion
             }
 
             RequestMessage = RequestMessageFactory.GetRequestEntity(decryptDoc);

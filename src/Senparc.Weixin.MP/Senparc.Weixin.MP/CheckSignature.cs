@@ -51,6 +51,9 @@ namespace Senparc.Weixin.MP
         /// <summary>
         /// 检查签名是否正确
         /// </summary>
+        /// <remarks>
+        /// 开发者通过检验signature对请求进行校验
+        /// </remarks>
         /// <param name="signature"></param>
         /// <param name="timestamp"></param>
         /// <param name="nonce"></param>
@@ -74,6 +77,12 @@ namespace Senparc.Weixin.MP
         /// <summary>
         /// 返回正确的签名
         /// </summary>
+        /// <remarks>
+        /// 加密/校验流程如下：
+        /// 1. 将token、timestamp、nonce三个参数进行字典序排序
+        /// 2. 将三个参数字符串拼接成一个字符串进行sha1加密
+        /// 3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
+        /// </remarks>
         /// <param name="timestamp"></param>
         /// <param name="nonce"></param>
         /// <param name="token"></param>

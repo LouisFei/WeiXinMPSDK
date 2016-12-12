@@ -22,11 +22,15 @@ using Senparc.Weixin.MP.Helpers;
 
 namespace Senparc.Weixin.MP.Entities
 {
+    /// <summary>
+    /// 回复消息接口
+    /// </summary>
     public interface IResponseMessageBase : Weixin.Entities.IResponseMessageBase
     {
+        /// <summary>
+        /// 回复消息类型
+        /// </summary>
         ResponseMsgType MsgType { get; }
-        //string Content { get; set; }
-        //bool FuncFlag { get; set; }
     }
 
     /// <summary>
@@ -34,12 +38,13 @@ namespace Senparc.Weixin.MP.Entities
     /// </summary>
     public class ResponseMessageBase : Weixin.Entities.ResponseMessageBase, IResponseMessageBase
     {
+        /// <summary>
+        /// 回复消息类型
+        /// </summary>
         public virtual ResponseMsgType MsgType
         {
             get { return ResponseMsgType.Text; }
         }
-        //public string Content { get; set; }
-        //public bool FuncFlag { get; set; }
 
         /// <summary>
         /// 获取响应类型实例，并初始化
@@ -47,7 +52,6 @@ namespace Senparc.Weixin.MP.Entities
         /// <param name="requestMessage">请求</param>
         /// <param name="msgType">响应类型</param>
         /// <returns></returns>
-        [Obsolete("建议使用CreateFromRequestMessage<T>(IRequestMessageBase requestMessage)取代此方法")]
         private static ResponseMessageBase CreateFromRequestMessage(IRequestMessageBase requestMessage, ResponseMsgType msgType)
         {
             ResponseMessageBase responseMessage = null;

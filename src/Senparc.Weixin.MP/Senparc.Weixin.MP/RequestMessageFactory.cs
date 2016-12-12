@@ -41,6 +41,7 @@ namespace Senparc.Weixin.MP
         //</xml>
 
         /// <summary>
+        /// 把接收到的消息由xml解析为具体的消息对象。
         /// 获取XDocument转换后的IRequestMessageBase实例。
         /// 如果MsgType不存在，抛出UnknownRequestMsgTypeException异常
         /// </summary>

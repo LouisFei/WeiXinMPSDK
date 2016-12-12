@@ -22,6 +22,10 @@ using Senparc.Weixin.Entities;
 
 namespace Senparc.Weixin.Context
 {
+    #region WeixinContextGlobal
+    /// <summary>
+    /// 微信上下文全局设置
+    /// </summary>
     public static class WeixinContextGlobal
     {
         public static object Lock = new object();
@@ -32,6 +36,7 @@ namespace Senparc.Weixin.Context
         public static bool UseWeixinContext = true;
 
     }
+    #endregion
 
     #region 废除接口
     //public interface IWeixinContext<TM, TRequest, TResponse>
@@ -63,6 +68,7 @@ namespace Senparc.Weixin.Context
     //}
     #endregion
 
+    #region WeixinContext
     /// <summary>
     /// 微信消息上下文（全局）
     /// 默认过期时间：90分钟
@@ -78,6 +84,7 @@ namespace Senparc.Weixin.Context
         /// 所有MessageContext集合，不要直接操作此对象
         /// </summary>
         public Dictionary<string, TM> MessageCollection { get; set; }
+
         /// <summary>
         /// MessageContext列队（LastActiveTime升序排列）,不要直接操作此对象
         /// </summary>
@@ -280,4 +287,5 @@ namespace Senparc.Weixin.Context
             }
         }
     }
+    #endregion
 }

@@ -6,9 +6,12 @@ using System.Xml.Serialization;
 
 namespace Senparc.Weixin.XmlUtility
 {
+    /// <summary>
+    /// Xml工具类
+    /// 序列化，反序列化
+    /// </summary>
     public static class XmlUtility
     {
-
         #region 反序列化
 
         /// <summary>
@@ -29,7 +32,6 @@ namespace Senparc.Weixin.XmlUtility
             }
             catch (Exception e)
             {
-
                 return null;
             }
         }
@@ -82,7 +84,7 @@ namespace Senparc.Weixin.XmlUtility
 
         #endregion
 
-
+        #region 序列化将流转成XML字符串
         /// <summary>
         /// 序列化将流转成XML字符串
         /// </summary>
@@ -96,6 +98,6 @@ namespace Senparc.Weixin.XmlUtility
                 return XDocument.Load(xr);
             }
         }
-
+        #endregion
     }
 }

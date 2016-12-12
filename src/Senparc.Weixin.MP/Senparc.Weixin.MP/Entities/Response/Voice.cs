@@ -13,8 +13,14 @@
 
 namespace Senparc.Weixin.MP.Entities
 {
+    /// <summary>
+    /// 语音素材
+    /// </summary>
     public class Voice
     {
+        /// <summary>
+        /// 素材编号
+        /// </summary>
         public string MediaId { get; set; }
     }
 }

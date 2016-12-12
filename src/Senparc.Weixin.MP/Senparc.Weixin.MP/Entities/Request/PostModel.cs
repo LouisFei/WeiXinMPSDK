@@ -23,14 +23,17 @@ namespace Senparc.Weixin.MP.Entities.Request
     public class PostModel : EncryptPostModel
     {
         //以下信息不会出现在微信发过来的信息中，都是微信后台需要设置（获取的）的信息，用于扩展传参使用
+        /// <summary>
+        /// 应用ID
+        /// </summary>
         public string AppId { get; set; }
 
         /// <summary>
         /// 设置服务器内部保密信息
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="encodingAESKey"></param>
-        /// <param name="appId"></param>
+        /// <param name="token">令牌</param>
+        /// <param name="encodingAESKey">消息加解密密钥</param>
+        /// <param name="appId">应用ID</param>
         public void SetSecretInfo(string token, string encodingAESKey, string appId)
         {
             Token = token;

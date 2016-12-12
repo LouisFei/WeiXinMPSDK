@@ -13,13 +13,22 @@
 
 namespace Senparc.Weixin.MP.Entities
 {
+    /// <summary>
+    /// 回复图片消息
+    /// </summary>
     public class ResponseMessageImage : ResponseMessageBase, IResponseMessageBase
     {
+        /// <summary>
+        /// 回复消息类型
+        /// </summary>
         new public virtual ResponseMsgType MsgType
         {
             get { return ResponseMsgType.Image; }
         }
 
+        /// <summary>
+        /// 图片素材
+        /// </summary>
         public Image Image { get; set; }
 
         public ResponseMessageImage()

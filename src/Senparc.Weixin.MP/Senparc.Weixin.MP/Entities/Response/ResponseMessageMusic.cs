@@ -13,15 +13,24 @@
 
 namespace Senparc.Weixin.MP.Entities
 {
+    /// <summary>
+    /// 回复音乐消息
+    /// </summary>
     public class ResponseMessageMusic : ResponseMessageBase, IResponseMessageBase
     {
+        /// <summary>
+        /// 回复消息类型
+        /// </summary>
         public override ResponseMsgType MsgType
         {
             get { return ResponseMsgType.Music; }
         }
 
+        /// <summary>
+        /// 音乐素材
+        /// </summary>
         public Music Music { get; set; }
-        //public string ThumbMediaId { get; set; } //把该参数移动到Music对象内部
+
         public ResponseMessageMusic()
         {
             Music = new Music();

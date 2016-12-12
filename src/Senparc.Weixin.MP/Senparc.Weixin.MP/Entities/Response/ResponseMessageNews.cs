@@ -16,7 +16,7 @@ using System.Collections.Generic;
 namespace Senparc.Weixin.MP.Entities
 {
     /// <summary>
-    /// 图文消息
+    /// 回复图文消息
     /// </summary>
     public class ResponseMessageNews : ResponseMessageBase, IResponseMessageBase
     {
@@ -25,6 +25,9 @@ namespace Senparc.Weixin.MP.Entities
             get { return ResponseMsgType.News; }
         }
 
+        /// <summary>
+        /// 图文消息个数，限制为10条以内
+        /// </summary>
         public int ArticleCount
         {
             get
@@ -38,6 +41,7 @@ namespace Senparc.Weixin.MP.Entities
         }
 
         /// <summary>
+        /// 多条图文消息信息，默认第一个item为大图,注意，如果图文数超过10，则将会无响应
         /// 文章列表，微信客户端只能输出前10条（可能未来数字会有变化，出于视觉效果考虑，建议控制在8条以内）
         /// </summary>
         public List<Article> Articles { get; set; }
