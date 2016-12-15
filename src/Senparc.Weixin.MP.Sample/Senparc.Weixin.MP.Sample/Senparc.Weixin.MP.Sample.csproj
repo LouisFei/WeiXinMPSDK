@@ -156,6 +156,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\FilterTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LuFei\Weixin2Controller.cs" />
     <Compile Include="Controllers\WeixinJSSDKController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Controllers\WeixinController.cs" />
     <Compile Include="Controllers\WeixinController_OldPost.cs" />
     <Compile Include="Controllers\TenPayController.cs" />
+    <Compile Include="CustomWeixinMessageRequestHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -334,6 +336,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LuFei\LuFei.Weixin.Core\LuFei.Weixin.Core.csproj">
+      <Project>{6b81b346-170e-4879-93e1-354915ebc948}</Project>
+      <Name>LuFei.Weixin.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Senparc.Weixin.Cache\Senparc.Weixin.Cache.Memcached\Senparc.Weixin.Cache.Memcached.csproj">
       <Project>{5b729497-5323-41d7-a104-0632119bedde}</Project>
       <Name>Senparc.Weixin.Cache.Memcached</Name>

@@ -25,7 +25,7 @@ using Senparc.Weixin.MP.Sample.CommonService.Utilities;
 namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
 {
     /// <summary>
-    /// 自定义MessageHandler
+    /// 自定义消息处理器 MessageHandler
     /// 把MessageHandler作为基类，重写对应请求的处理方法
     /// </summary>
     public partial class CustomMessageHandler : MessageHandler<CustomMessageContext>
@@ -48,7 +48,13 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
         private string wiweihiKey = WebConfigurationManager.AppSettings["WeixinAgentWeiweihiKey"];//WeiweihiKey专门用于对接www.Weiweihi.com平台，获取方式见：http://www.weiweihi.com/ApiDocuments/Item/25#51
 #endif
 
+        /// <summary>
+        /// 应用ID
+        /// </summary>
         private string appId = WebConfigurationManager.AppSettings["WeixinAppId"];
+        /// <summary>
+        /// 应用密钥
+        /// </summary>
         private string appSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
 
         /// <summary>
@@ -57,14 +63,15 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
         public static Dictionary<string, string> TemplateMessageCollection = new Dictionary<string, string>();
 
         /// <summary>
-        /// 
+        /// 构造自定义消息处理器
         /// </summary>
-        /// <param name="inputStream">请求</param>
-        /// <param name="postModel">请求</param>
-        /// <param name="maxRecordCount"></param>
+        /// <param name="inputStream">请求数据流</param>
+        /// <param name="postModel">请求实体</param>
+        /// <param name="maxRecordCount">消息上下文最多消息记录</param>
         public CustomMessageHandler(Stream requestStream, PostModel postModel, int maxRecordCount = 0)
             : base(requestStream, postModel, maxRecordCount)
         {
+            //消息上下文消息过期时间，此处设置为3分钟
             //这里设置仅用于测试，实际开发可以在外部更全局的地方设置，
             //比如MessageHandler<MessageContext>.GlobalWeixinContext.ExpireMinutes = 3。
             WeixinContext.ExpireMinutes = 3;

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B81B346-170E-4879-93E1-354915EBC948}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LuFei.Weixin.Core</RootNamespace>
+    <AssemblyName>LuFei.Weixin.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CheckSignature.cs" />
+    <Compile Include="DefaultRequestMessageHandler.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Message\ConverterAttribute.cs" />
+    <Compile Include="Message\RequestMessageFactory.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestGeneralMessageBaseConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestLocationMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestMessageBaseConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestImageMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestLinkMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestVoiceMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestVideoMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestShortVideoMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\General\RequestTextMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\Event\RequestMenuClickEventMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\Event\RequestMenuViewEventMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\Event\RequestScanEventMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\Event\RequestUnsubscribeEventMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\Event\RequestSubscribeEventMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\Event\RequestBaseEventMessageConverter.cs" />
+    <Compile Include="Message\Request\XmlConverter\Event\RequestLocationEventMessageConverter.cs" />
+    <Compile Include="Message\Response\XmlConverter\ResponseNewsMessageConverter.cs" />
+    <Compile Include="Message\Response\XmlConverter\ResponseVoiceMessageConverter.cs" />
+    <Compile Include="Message\Response\XmlConverter\ResponseVideoMessageConverter.cs" />
+    <Compile Include="Message\Response\XmlConverter\ResponseMusicMessageConverter.cs" />
+    <Compile Include="Message\Response\XmlConverter\ResponseImageMessageConverter.cs" />
+    <Compile Include="Message\Response\XmlConverter\ResponseTextMessageConverter.cs" />
+    <Compile Include="Message\Response\XmlConverter\ResponseBaseMessageConverter.cs" />
+    <Compile Include="RequestMessageHandler.cs" />
+    <Compile Include="Message\Request\Event\RequestBaseEventMessage.cs" />
+    <Compile Include="Message\Request\Event\RequestMenuViewEventMessage.cs" />
+    <Compile Include="Message\Request\Event\RequestScanEventMessage.cs" />
+    <Compile Include="Message\Request\Event\RequestLocationEventMessage.cs" />
+    <Compile Include="Message\Request\Event\RequestMenuClickEventMessage.cs" />
+    <Compile Include="Message\Request\Event\RequestUnsubscribeEventMessage.cs" />
+    <Compile Include="Message\Request\Event\RequestSubscribeEventMessage.cs" />
+    <Compile Include="Message\Request\General\RequestBaseGeneralMessage.cs" />
+    <Compile Include="Message\Request\General\RequestLocationMessage.cs" />
+    <Compile Include="Message\Request\General\RequestLinkMessage.cs" />
+    <Compile Include="Message\Request\General\RequestVideoMessage.cs" />
+    <Compile Include="Message\Request\General\RequestShortVideoMessage.cs" />
+    <Compile Include="Message\Request\General\RequestVoiceMessage.cs" />
+    <Compile Include="Message\Request\General\RequestImageMessage.cs" />
+    <Compile Include="Message\Request\General\RequestTextMessage.cs" />
+    <Compile Include="Message\Request\RequestBaseMessage.cs" />
+    <Compile Include="Message\Request\RequestEventType.cs" />
+    <Compile Include="Message\Request\RequestMessageType.cs" />
+    <Compile Include="Message\Response\Article.cs" />
+    <Compile Include="Message\Response\Image.cs" />
+    <Compile Include="Message\Response\ResponseNewsMessage.cs" />
+    <Compile Include="Message\Response\ResponseMusicMessage.cs" />
+    <Compile Include="Message\Response\ResponseVideoMessage.cs" />
+    <Compile Include="Message\Response\ResponseVoiceMessage.cs" />
+    <Compile Include="Message\Response\ResponseMessageType.cs" />
+    <Compile Include="Message\Response\ResponseBaseMessage.cs" />
+    <Compile Include="Message\Response\ResponseImageMessage.cs" />
+    <Compile Include="Message\Response\ResponseTextMessage.cs" />
+    <Compile Include="Message\Response\Video.cs" />
+    <Compile Include="Message\Response\Music.cs" />
+    <Compile Include="Message\Response\Voice.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestMessageHandler.Event.cs" />
+    <Compile Include="WeixinConfig.cs" />
+    <Compile Include="WeixinRequestModel.cs" />
+    <Compile Include="TencentApi\Cryptography.cs" />
+    <Compile Include="TencentApi\WXBizMsgCrypt.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RequestMessageHandler.Message.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
